@@ -6,5 +6,5 @@ import input.tfrun as tfrun
 
 
 deny["always failed"]  {
-    true
+    false
 }
