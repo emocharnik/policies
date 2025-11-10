@@ -1,10 +1,10 @@
-package terraform
+package helpers.utils
 
 import input.tfplan as tfplan
 
 # Allowed values
-allowed_acls = ["private"]
-allowed_sse_algorithms = ["aws:kms", "AES256"]
+allowed_acls := ["private"]
+allowed_sse_algorithms := ["aws:kms", "AES256"]
 
 # Get all S3 buckets
 s3_buckets[r] {
