@@ -5,7 +5,7 @@ import data.helpers.utils
 
 # Deny S3 buckets without encryption when no separate encryption resource exists
 # Ensures all buckets have server-side encryption configured
-deny[reason] {
+deny contains reason if {
     r := utils.s3_buckets[_]
     not r.change.after_unknown.server_side_encryption_configuration
     count(r.change.after.server_side_encryption_configuration) == 0

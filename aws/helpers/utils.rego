@@ -7,32 +7,32 @@ allowed_acls := ["private"]
 allowed_sse_algorithms := ["aws:kms", "AES256"]
 
 # Get all S3 buckets
-s3_buckets[r] {
+s3_buckets contains r if {
     r := tfplan.resource_changes[_]
     r.type == "aws_s3_bucket"
 }
 
 # Get all S3 bucket encryption configurations (separate resource in modern AWS provider)
-s3_bucket_encryption_configs[r] {
+s3_bucket_encryption_configs contains r if {
     r := tfplan.resource_changes[_]
     r.type == "aws_s3_bucket_server_side_encryption_configuration"
 }
 
 # Get all S3 bucket ownership controls (used to enforce BucketOwnerEnforced which disables ACLs)
-s3_bucket_ownership_controls[r] {
+s3_bucket_ownership_controls contains r if {
     r := tfplan.resource_changes[_]
     r.type == "aws_s3_bucket_ownership_controls"
 }
 
 # Helper function to check if a bucket has BucketOwnerEnforced (which disables ACLs)
-has_bucket_owner_enforced(bucket_address) {
+has_bucket_owner_enforced(bucket_address) if {
     ownership := s3_bucket_ownership_controls[_]
     rule := ownership.change.after.rule[_]
     rule.object_ownership == "BucketOwnerEnforced"
 }
 
 # Helper function to check if array contains element
-array_contains(arr, elem) {
+array_contains(arr, elem) if {
     arr[_] = elem
 }
 

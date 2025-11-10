@@ -5,7 +5,7 @@ import data.helpers.utils
 
 # Deny S3 buckets with non-private ACL unless using BucketOwnerEnforced
 # Ensures buckets don't have public or other insecure ACL settings
-deny[reason] {
+deny contains reason if {
     r := utils.s3_buckets[_]
     not r.change.after_unknown.acl
     acl := r.change.after.acl

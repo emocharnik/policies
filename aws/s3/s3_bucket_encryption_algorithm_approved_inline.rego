@@ -5,7 +5,7 @@ import data.helpers.utils
 
 # Validate SSE algorithm for inline encryption configuration on aws_s3_bucket
 # Ensures only approved encryption algorithms (aws:kms or AES256) are used
-deny[reason] {
+deny contains reason if {
     r := utils.s3_buckets[_]
     not r.change.after_unknown.server_side_encryption_configuration
     sse_configuration := r.change.after.server_side_encryption_configuration[_]
