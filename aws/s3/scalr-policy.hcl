@@ -29,5 +29,5 @@ policy "s3_bucket_encryption_algorithm_approved_inline" {
 
 policy "s3_bucket_encryption_algorithm_approved_separate" {
   enabled           = true
-  enforcement_level = "soft-mandatory"
+  enforcement_level  = "soft-mandatory"
 }
